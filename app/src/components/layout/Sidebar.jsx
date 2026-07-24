@@ -10,7 +10,6 @@ import {
   Person24Regular,
   Settings24Regular,
 } from "@fluentui/react-icons";
-
 import logo from "../../assets/college-logo.png";
 const menuItems = [
   {
