@@ -1,97 +1,156 @@
-import { Text } from "@fluentui/react-components";
+import {
+  FluentProvider,
+  webLightTheme,
+  Button,
+} from "@fluentui/react-components";
+
+import {
+  Home24Regular,
+  Building24Regular,
+  BuildingMultiple24Regular,
+  Door24Regular,
+  ClipboardTask24Regular,
+  TaskListSquare24Regular,
+  DocumentChart24Regular,
+  Person24Regular,
+  Settings24Regular,
+} from "@fluentui/react-icons";
+
+import { NavLink, Outlet } from "react-router-dom";
 import { useMsal } from "@azure/msal-react";
-import LoginButton from "../components/LoginButton";
 
 function MainLayout() {
   const { accounts } = useMsal();
 
+  const menu = [
+    { title: "لوحة التحكم", icon: <Home24Regular />, path: "/" },
+    { title: "المباني", icon: <Building24Regular />, path: "/buildings" },
+    { title: "الأدوار", icon: <BuildingMultiple24Regular />, path: "/floors" },
+    { title: "القاعات", icon: <Door24Regular />, path: "/rooms" },
+    { title: "الجاهزية", icon: <ClipboardTask24Regular />, path: "/readiness" },
+    { title: "المهام", icon: <TaskListSquare24Regular />, path: "/tasks" },
+    { title: "التقارير", icon: <DocumentChart24Regular />, path: "/reports" },
+    { title: "الملف الشخصي", icon: <Person24Regular />, path: "/profile" },
+    { title: "الإعدادات", icon: <Settings24Regular />, path: "/settings" },
+  ];
+
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        background: "#f5f5f5",
-      }}
-    >
-      {/* Sidebar */}
+    <FluentProvider theme={webLightTheme}>
       <div
         style={{
-          width: "260px",
-          background: "#004b87",
-          color: "white",
-          padding: "20px",
-        }}
-      >
-        <Text
-          size={600}
-          weight="bold"
-          style={{ color: "white" }}
-        >
-          University of Ha'il
-        </Text>
-
-        <br />
-
-        <Text style={{ color: "white" }}>
-          Facilities Readiness
-        </Text>
-      </div>
-
-      {/* Main Content */}
-      <div
-        style={{
-          flex: 1,
-          padding: "30px",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          flexDirection: "row-reverse",
+          height: "100vh",
+          direction: "rtl",
         }}
       >
-        <Text
-          size={800}
-          weight="bold"
+        {/* Sidebar */}
+
+        <aside
+          style={{
+            width: 280,
+            background: "#ffffff",
+            borderLeft: "1px solid #ddd",
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-          Dashboard
-        </Text>
+          <div
+            style={{
+              padding: 25,
+              fontSize: 22,
+              fontWeight: "bold",
+            }}
+          >
+            FRRS
+          </div>
 
-        <br />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+              padding: 15,
+            }}
+          >
+            {menu.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                style={({ isActive }) => ({
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  textDecoration: "none",
+                  padding: "12px 15px",
+                  borderRadius: 10,
+                  color: isActive ? "#ffffff" : "#333",
+                  background: isActive ? "#0f6cbd" : "transparent",
+                })}
+              >
+                {item.icon}
+                {item.title}
+              </NavLink>
+            ))}
+          </div>
+        </aside>
 
-        {accounts.length === 0 ? (
-          <>
-            <Text size={500}>
-              الرجاء تسجيل الدخول بحساب جامعة حائل
-            </Text>
+        {/* Main */}
 
-            <br />
-            <br />
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Header */}
 
-            <LoginButton />
-          </>
-        ) : (
-          <>
-            <Text size={500}>
-              مرحباً
-            </Text>
+          <header
+            style={{
+              height: 70,
+              borderBottom: "1px solid #ddd",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "0 25px",
+              background: "#fff",
+            }}
+          >
+            <h3>نظام جاهزية المرافق</h3>
 
-            <br />
-
-            <Text
-              size={700}
-              weight="bold"
+            <div
+              style={{
+                display: "flex",
+                gap: 15,
+                alignItems: "center",
+              }}
             >
-              {accounts[0].name}
-            </Text>
+              <span>
+                {accounts.length > 0 ? accounts[0].name : ""}
+              </span>
 
-            <br />
+              <Button appearance="secondary">
+                تسجيل الخروج
+              </Button>
+            </div>
+          </header>
 
-            <Text>
-              تم تسجيل الدخول بنجاح إلى نظام جاهزية المرافق
-            </Text>
-          </>
-        )}
+          {/* Content */}
+
+          <main
+            style={{
+              flex: 1,
+              padding: 30,
+              background: "#f5f6fa",
+              overflow: "auto",
+            }}
+          >
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
+    </FluentProvider>
   );
 }
 
