@@ -1,27 +1,17 @@
-import { Button } from "@fluentui/react-components";
-import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../authConfig";
+export const msalConfig = {
+  auth: {
+    clientId: "bd9ed99a-c81a-44bf-aaf9-0a8f9584ab8a",
+    authority:
+      "https://login.microsoftonline.com/514faa19-8c84-4cef-8ae9-2b9dbce933cd",
+    redirectUri: "https://uoh-frrs.onrender.com",
+  },
 
-function LoginButton() {
-  const { instance } = useMsal();
+  cache: {
+    cacheLocation: "localStorage",
+    storeAuthStateInCookie: false,
+  },
+};
 
-  const handleLogin = async () => {
-    try {
-      await instance.loginPopup(loginRequest);
-    } catch (error) {
-      console.error("Login Error:", error);
-    }
-  };
-
-  return (
-    <Button
-      appearance="primary"
-      size="large"
-      onClick={handleLogin}
-    >
-      تسجيل الدخول بحساب جامعة حائل
-    </Button>
-  );
-}
-
-export default LoginButton;
+export const loginRequest = {
+  scopes: ["User.Read"],
+};
