@@ -22,8 +22,8 @@ function LoginButton() {
     <Button
       appearance="primary"
       size="large"
-      onClick={handleLogin}
       disabled={inProgress !== InteractionStatus.None}
+      onClick={handleLogin}
     >
       {inProgress !== InteractionStatus.None
         ? "جارٍ تسجيل الدخول..."
