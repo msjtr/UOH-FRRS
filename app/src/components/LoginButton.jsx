@@ -1,18 +1,15 @@
-import { useMsal } from "@azure/msal-react";
 import { Button } from "@fluentui/react-components";
+import { useMsal } from "@azure/msal-react";
+import { loginRequest } from "../authConfig";
 
-export default function LoginButton() {
+function LoginButton() {
   const { instance } = useMsal();
 
-  const login = async () => {
+  const handleLogin = async () => {
     try {
-      await instance.loginPopup({
-        scopes: [
-          "User.Read"
-        ]
-      });
+      await instance.loginPopup(loginRequest);
     } catch (error) {
-      console.error(error);
+      console.error("Login Error:", error);
     }
   };
 
@@ -20,9 +17,11 @@ export default function LoginButton() {
     <Button
       appearance="primary"
       size="large"
-      onClick={login}
+      onClick={handleLogin}
     >
       تسجيل الدخول بحساب جامعة حائل
     </Button>
   );
 }
+
+export default LoginButton;
