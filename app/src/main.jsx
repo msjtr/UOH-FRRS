@@ -10,23 +10,35 @@ import { msalConfig } from "./authConfig";
 const msalInstance = new PublicClientApplication(msalConfig);
 
 async function bootstrap() {
-  // تهيئة MSAL
-  await msalInstance.initialize();
+  try {
+    // تهيئة MSAL
+    await msalInstance.initialize();
 
-  // معالجة الرجوع من تسجيل الدخول (Redirect) إن وجد
-  await msalInstance.handleRedirectPromise();
+    // معالجة الرجوع من تسجيل الدخول
+    const response = await msalInstance.handleRedirectPromise();
 
-  createRoot(document.getElementById("root")).render(
-    <StrictMode>
-      <MsalProvider instance={msalInstance}>
-        <FluentProvider theme={webLightTheme}>
-          <App />
-        </FluentProvider>
-      </MsalProvider>
-    </StrictMode>
-  );
+    // تعيين الحساب النشط
+    if (response?.account) {
+      msalInstance.setActiveAccount(response.account);
+    } else {
+      const accounts = msalInstance.getAllAccounts();
+      if (accounts.length > 0) {
+        msalInstance.setActiveAccount(accounts[0]);
+      }
+    }
+
+    createRoot(document.getElementById("root")).render(
+      <StrictMode>
+        <MsalProvider instance={msalInstance}>
+          <FluentProvider theme={webLightTheme}>
+            <App />
+          </FluentProvider>
+        </MsalProvider>
+      </StrictMode>
+    );
+  } catch (error) {
+    console.error("MSAL Initialization Error:", error);
+  }
 }
 
-bootstrap().catch((error) => {
-  console.error("MSAL Initialization Error:", error);
-});
+bootstrap();
