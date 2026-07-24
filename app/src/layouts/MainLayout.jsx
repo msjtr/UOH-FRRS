@@ -1,3 +1,6 @@
+import { Outlet, NavLink } from "react-router-dom";
+import { useMsal } from "@azure/msal-react";
+
 import {
   FluentProvider,
   webLightTheme,
@@ -10,28 +13,61 @@ import {
   BuildingMultiple24Regular,
   Door24Regular,
   ClipboardTask24Regular,
-  TaskListSquare24Regular,
-  DocumentChart24Regular,
+  Clipboard24Regular,
+  Document24Regular,
   Person24Regular,
   Settings24Regular,
 } from "@fluentui/react-icons";
 
-import { NavLink, Outlet } from "react-router-dom";
-import { useMsal } from "@azure/msal-react";
-
 function MainLayout() {
-  const { accounts } = useMsal();
+  const { accounts, instance } = useMsal();
 
   const menu = [
-    { title: "لوحة التحكم", icon: <Home24Regular />, path: "/" },
-    { title: "المباني", icon: <Building24Regular />, path: "/buildings" },
-    { title: "الأدوار", icon: <BuildingMultiple24Regular />, path: "/floors" },
-    { title: "القاعات", icon: <Door24Regular />, path: "/rooms" },
-    { title: "الجاهزية", icon: <ClipboardTask24Regular />, path: "/readiness" },
-    { title: "المهام", icon: <TaskListSquare24Regular />, path: "/tasks" },
-    { title: "التقارير", icon: <DocumentChart24Regular />, path: "/reports" },
-    { title: "الملف الشخصي", icon: <Person24Regular />, path: "/profile" },
-    { title: "الإعدادات", icon: <Settings24Regular />, path: "/settings" },
+    {
+      title: "لوحة التحكم",
+      path: "/",
+      icon: <Home24Regular />,
+    },
+    {
+      title: "المباني",
+      path: "/buildings",
+      icon: <Building24Regular />,
+    },
+    {
+      title: "الأدوار",
+      path: "/floors",
+      icon: <BuildingMultiple24Regular />,
+    },
+    {
+      title: "القاعات",
+      path: "/rooms",
+      icon: <Door24Regular />,
+    },
+    {
+      title: "نماذج الجاهزية",
+      path: "/readiness",
+      icon: <ClipboardTask24Regular />,
+    },
+    {
+      title: "المهام",
+      path: "/tasks",
+      icon: <Clipboard24Regular />,
+    },
+    {
+      title: "التقارير",
+      path: "/reports",
+      icon: <Document24Regular />,
+    },
+    {
+      title: "الملف الشخصي",
+      path: "/profile",
+      icon: <Person24Regular />,
+    },
+    {
+      title: "الإعدادات",
+      path: "/settings",
+      icon: <Settings24Regular />,
+    },
   ];
 
   return (
@@ -44,13 +80,11 @@ function MainLayout() {
           direction: "rtl",
         }}
       >
-        {/* Sidebar */}
-
         <aside
           style={{
             width: 280,
             background: "#ffffff",
-            borderLeft: "1px solid #ddd",
+            borderLeft: "1px solid #e5e5e5",
             display: "flex",
             flexDirection: "column",
           }}
@@ -58,8 +92,8 @@ function MainLayout() {
           <div
             style={{
               padding: 25,
-              fontSize: 22,
               fontWeight: "bold",
+              fontSize: 22,
             }}
           >
             FRRS
@@ -77,15 +111,16 @@ function MainLayout() {
               <NavLink
                 key={item.path}
                 to={item.path}
+                end={item.path === "/"}
                 style={({ isActive }) => ({
+                  textDecoration: "none",
+                  color: isActive ? "#fff" : "#333",
+                  background: isActive ? "#0f6cbd" : "transparent",
+                  padding: "12px 16px",
+                  borderRadius: 8,
                   display: "flex",
                   alignItems: "center",
-                  gap: 12,
-                  textDecoration: "none",
-                  padding: "12px 15px",
-                  borderRadius: 10,
-                  color: isActive ? "#ffffff" : "#333",
-                  background: isActive ? "#0f6cbd" : "transparent",
+                  gap: 10,
                 })}
               >
                 {item.icon}
@@ -95,8 +130,6 @@ function MainLayout() {
           </div>
         </aside>
 
-        {/* Main */}
-
         <div
           style={{
             flex: 1,
@@ -104,12 +137,10 @@ function MainLayout() {
             flexDirection: "column",
           }}
         >
-          {/* Header */}
-
           <header
             style={{
               height: 70,
-              borderBottom: "1px solid #ddd",
+              borderBottom: "1px solid #e5e5e5",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -126,23 +157,22 @@ function MainLayout() {
                 alignItems: "center",
               }}
             >
-              <span>
-                {accounts.length > 0 ? accounts[0].name : ""}
-              </span>
+              <span>{accounts[0]?.name}</span>
 
-              <Button appearance="secondary">
+              <Button
+                appearance="secondary"
+                onClick={() => instance.logoutRedirect()}
+              >
                 تسجيل الخروج
               </Button>
             </div>
           </header>
 
-          {/* Content */}
-
           <main
             style={{
               flex: 1,
-              padding: 30,
               background: "#f5f6fa",
+              padding: 30,
               overflow: "auto",
             }}
           >
