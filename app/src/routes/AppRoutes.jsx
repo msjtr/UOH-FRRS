@@ -12,11 +12,11 @@ import Reports from "../pages/Reports";
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 
-function AppRoutes() {
+export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainLayout />}>
+        <Route element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="buildings" element={<Buildings />} />
           <Route path="floors" element={<Floors />} />
@@ -31,5 +31,3 @@ function AppRoutes() {
     </BrowserRouter>
   );
 }
-
-export default AppRoutes;
