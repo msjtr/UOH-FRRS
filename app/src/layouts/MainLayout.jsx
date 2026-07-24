@@ -1,6 +1,10 @@
 import { Text } from "@fluentui/react-components";
+import { useMsal } from "@azure/msal-react";
+import LoginButton from "../components/LoginButton";
 
 function MainLayout() {
+  const { accounts } = useMsal();
+
   return (
     <div
       style={{
@@ -38,6 +42,10 @@ function MainLayout() {
         style={{
           flex: 1,
           padding: "30px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Text
@@ -49,10 +57,39 @@ function MainLayout() {
 
         <br />
 
-        <Text>
-          Welcome to Facilities Readiness &
-          Reporting System
-        </Text>
+        {accounts.length === 0 ? (
+          <>
+            <Text size={500}>
+              الرجاء تسجيل الدخول بحساب جامعة حائل
+            </Text>
+
+            <br />
+            <br />
+
+            <LoginButton />
+          </>
+        ) : (
+          <>
+            <Text size={500}>
+              مرحباً
+            </Text>
+
+            <br />
+
+            <Text
+              size={700}
+              weight="bold"
+            >
+              {accounts[0].name}
+            </Text>
+
+            <br />
+
+            <Text>
+              تم تسجيل الدخول بنجاح إلى نظام جاهزية المرافق
+            </Text>
+          </>
+        )}
       </div>
     </div>
   );
