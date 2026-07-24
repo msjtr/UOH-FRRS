@@ -11,8 +11,7 @@ import {
   Settings24Regular,
 } from "@fluentui/react-icons";
 
-import logo from "../../assets/images/college-logo.png";
-
+import logo from "../../assets/college-logo.png";
 const menuItems = [
   {
     title: "لوحة التحكم",
