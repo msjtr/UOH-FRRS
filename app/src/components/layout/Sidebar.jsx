@@ -4,11 +4,11 @@ import {
   BuildingMultiple24Regular,
   Door24Regular,
   ClipboardTask24Regular,
-  DocumentChart24Regular,
+  Document24Regular,
   Settings24Regular,
   Person24Regular,
-  PanelRightExpand24Regular,
-  PanelRightContract24Regular,
+  Navigation24Regular,
+  PanelLeft24Regular,
 } from "@fluentui/react-icons";
 
 import { NavLink } from "react-router-dom";
@@ -44,7 +44,7 @@ const menu = [
   {
     title: "التقارير",
     path: "/reports",
-    icon: <DocumentChart24Regular />,
+    icon: <Document24Regular />,
   },
   {
     title: "الإعدادات",
@@ -61,30 +61,23 @@ const menu = [
 export default function Sidebar({ collapsed, onToggle }) {
   return (
     <aside className={collapsed ? "sidebar collapsed" : "sidebar"}>
-
       <div className="sidebar-header">
-
-        {!collapsed && (
-          <div className="logo">
-            FRRS
-          </div>
-        )}
+        {!collapsed && <div className="logo">FRRS</div>}
 
         <button
           className="collapse-btn"
           onClick={onToggle}
+          type="button"
         >
           {collapsed ? (
-            <PanelRightExpand24Regular />
+            <Navigation24Regular />
           ) : (
-            <PanelRightContract24Regular />
+            <PanelLeft24Regular />
           )}
         </button>
-
       </div>
 
       <nav className="sidebar-menu">
-
         {menu.map((item) => (
           <NavLink
             key={item.path}
@@ -94,9 +87,7 @@ export default function Sidebar({ collapsed, onToggle }) {
               isActive ? "menu-item active" : "menu-item"
             }
           >
-            <span className="menu-icon">
-              {item.icon}
-            </span>
+            <span className="menu-icon">{item.icon}</span>
 
             {!collapsed && (
               <span className="menu-title">
@@ -105,9 +96,7 @@ export default function Sidebar({ collapsed, onToggle }) {
             )}
           </NavLink>
         ))}
-
       </nav>
-
     </aside>
   );
 }
