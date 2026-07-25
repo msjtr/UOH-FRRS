@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    direction: rtl;
+    background: #f4f7fb;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.app-layout {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    height: 100%;
+}
+
+.app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.app-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    background: #f4f7fb;
+}
+
+.page-content {
+    width: 100%;
+    min-height: 100%;
+}
+
+@media (max-width: 768px) {
+
+    .app-content {
+        padding: 16px;
+    }
+
+}
