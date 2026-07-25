@@ -1,170 +1,113 @@
-import { NavLink } from "react-router-dom";
 import {
   Home24Regular,
   Building24Regular,
   BuildingMultiple24Regular,
   Door24Regular,
   ClipboardTask24Regular,
-  Clipboard24Regular,
-  Document24Regular,
-  Person24Regular,
+  DocumentChart24Regular,
   Settings24Regular,
+  Person24Regular,
+  PanelRightExpand24Regular,
+  PanelRightContract24Regular,
 } from "@fluentui/react-icons";
-import logo from "../../assets/college-logo.png";
-const menuItems = [
+
+import { NavLink } from "react-router-dom";
+
+import "../../assets/styles/sidebar.css";
+
+const menu = [
   {
     title: "لوحة التحكم",
     path: "/",
-    icon: Home24Regular,
+    icon: <Home24Regular />,
   },
   {
     title: "المباني",
     path: "/buildings",
-    icon: Building24Regular,
+    icon: <Building24Regular />,
   },
   {
     title: "الأدوار",
     path: "/floors",
-    icon: BuildingMultiple24Regular,
+    icon: <BuildingMultiple24Regular />,
   },
   {
     title: "القاعات",
     path: "/rooms",
-    icon: Door24Regular,
+    icon: <Door24Regular />,
   },
   {
-    title: "نماذج الجاهزية",
+    title: "الجاهزية",
     path: "/readiness",
-    icon: ClipboardTask24Regular,
-  },
-  {
-    title: "المهام",
-    path: "/tasks",
-    icon: Clipboard24Regular,
+    icon: <ClipboardTask24Regular />,
   },
   {
     title: "التقارير",
     path: "/reports",
-    icon: Document24Regular,
-  },
-  {
-    title: "الملف الشخصي",
-    path: "/profile",
-    icon: Person24Regular,
+    icon: <DocumentChart24Regular />,
   },
   {
     title: "الإعدادات",
     path: "/settings",
-    icon: Settings24Regular,
+    icon: <Settings24Regular />,
+  },
+  {
+    title: "الملف الشخصي",
+    path: "/profile",
+    icon: <Person24Regular />,
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ collapsed, onToggle }) {
   return (
-    <aside
-      style={{
-        width: 280,
-        background: "#ffffff",
-        borderLeft: "1px solid #E5E7EB",
-        display: "flex",
-        flexDirection: "column",
-        boxShadow: "0 2px 10px rgba(0,0,0,.06)",
-      }}
-    >
-      {/* Logo */}
+    <aside className={collapsed ? "sidebar collapsed" : "sidebar"}>
 
-      <div
-        style={{
-          padding: 24,
-          textAlign: "center",
-          borderBottom: "1px solid #eee",
-        }}
-      >
-        <img
-          src={logo}
-          alt="College Logo"
-          style={{
-            width: 95,
-            marginBottom: 12,
-          }}
-        />
+      <div className="sidebar-header">
 
-        <h2
-          style={{
-            margin: 0,
-            fontSize: 20,
-            color: "#0F172A",
-          }}
+        {!collapsed && (
+          <div className="logo">
+            FRRS
+          </div>
+        )}
+
+        <button
+          className="collapse-btn"
+          onClick={onToggle}
         >
-          FRRS
-        </h2>
+          {collapsed ? (
+            <PanelRightExpand24Regular />
+          ) : (
+            <PanelRightContract24Regular />
+          )}
+        </button>
 
-        <div
-          style={{
-            marginTop: 6,
-            fontSize: 13,
-            color: "#64748B",
-          }}
-        >
-          نظام جاهزية المرافق
-        </div>
       </div>
 
-      {/* Menu */}
+      <nav className="sidebar-menu">
 
-      <nav
-        style={{
-          padding: 16,
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          flex: 1,
-        }}
-      >
-        {menuItems.map((item) => {
-          const Icon = item.icon;
+        {menu.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            end={item.path === "/"}
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+          >
+            <span className="menu-icon">
+              {item.icon}
+            </span>
 
-          return (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.path === "/"}
-              style={({ isActive }) => ({
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                padding: "13px 16px",
-                borderRadius: 10,
-                textDecoration: "none",
-                transition: ".2s",
-                background: isActive ? "#0F6CBD" : "transparent",
-                color: isActive ? "#fff" : "#334155",
-                fontWeight: isActive ? 600 : 500,
-              })}
-            >
-              <Icon fontSize={22} />
+            {!collapsed && (
+              <span className="menu-title">
+                {item.title}
+              </span>
+            )}
+          </NavLink>
+        ))}
 
-              <span>{item.title}</span>
-            </NavLink>
-          );
-        })}
       </nav>
 
-      {/* Footer */}
-
-      <div
-        style={{
-          padding: 18,
-          borderTop: "1px solid #eee",
-          fontSize: 12,
-          color: "#64748B",
-          textAlign: "center",
-        }}
-      >
-        University of Ha'il
-        <br />
-        Facilities Readiness Reporting System
-      </div>
     </aside>
   );
 }
