@@ -1,48 +1,45 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { FluentProvider, webLightTheme } from "@fluentui/react-components";
 
 import Sidebar from "../components/layout/Sidebar";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import Breadcrumb from "../components/layout/Breadcrumb";
+
+import "../assets/styles/layout.css";
 
 export default function MainLayout() {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <FluentProvider theme={webLightTheme}>
-      <div
-        style={{
-          display: "flex",
-          direction: "rtl",
-          height: "100vh",
-          background: "#F5F7FA",
-        }}
-      >
-        {/* القائمة اليمنى */}
-        <Sidebar />
+    <div className="app-layout">
 
-        {/* المحتوى */}
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-          }}
-        >
-          <Header />
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={() => setCollapsed(!collapsed)}
+      />
 
-          <main
-            style={{
-              flex: 1,
-              padding: 30,
-              overflowY: "auto",
-            }}
-          >
+      <div className="app-main">
+
+        <Header
+          collapsed={collapsed}
+          onToggle={() => setCollapsed(!collapsed)}
+        />
+
+        <div className="app-content">
+
+          <Breadcrumb />
+
+          <main className="page-content">
             <Outlet />
           </main>
 
-          <Footer />
         </div>
+
+        <Footer />
+
       </div>
-    </FluentProvider>
+
+    </div>
   );
 }
