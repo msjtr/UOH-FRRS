@@ -1,39 +1,31 @@
-import { Button } from "@fluentui/react-components";
-import { useMsal } from "@azure/msal-react";
+.app-header{
+    height:72px;
+    background:#ffffff;
+    border-bottom:1px solid #e6e6e6;
 
-export default function Header() {
-  const { accounts, instance } = useMsal();
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-  return (
-    <header
-      style={{
-        height: 70,
-        background: "#fff",
-        borderBottom: "1px solid #e5e7eb",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 24px",
-      }}
-    >
-      <h2 style={{ margin: 0 }}>نظام جاهزية المرافق</h2>
+    padding:0 24px;
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-        }}
-      >
-        <span>{accounts[0]?.name}</span>
+    flex-shrink:0;
+}
 
-        <Button
-          appearance="secondary"
-          onClick={() => instance.logoutRedirect()}
-        >
-          تسجيل الخروج
-        </Button>
-      </div>
-    </header>
-  );
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.header-subtitle{
+    font-size:13px;
+    color:#777;
+    margin-top:3px;
 }
