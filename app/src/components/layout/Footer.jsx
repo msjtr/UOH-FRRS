@@ -1,18 +1,9 @@
+import "../../assets/styles/footer.css";
+
 export default function Footer() {
   return (
-    <footer
-      style={{
-        height: 48,
-        background: "#fff",
-        borderTop: "1px solid #e5e7eb",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: 12,
-        color: "#666",
-      }}
-    >
-      © University of Ha'il - Facilities Readiness Reporting System
+    <footer className="app-footer">
+      © 2026 University of Ha'il - Facilities Readiness Reporting System
     </footer>
   );
 }
