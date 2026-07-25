@@ -1,31 +1,57 @@
-.app-header{
-    height:72px;
-    background:#ffffff;
-    border-bottom:1px solid #e6e6e6;
+import {
+  Button,
+  Avatar,
+  Text,
+} from "@fluentui/react-components";
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+import {
+  Navigation24Regular,
+  Alert24Regular,
+} from "@fluentui/react-icons";
 
-    padding:0 24px;
+import "../../assets/styles/header.css";
 
-    flex-shrink:0;
-}
+export default function Header({ collapsed, onToggle }) {
+  return (
+    <header className="app-header">
 
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:18px;
-}
+      <div className="header-right">
 
-.header-left{
-    display:flex;
-    align-items:center;
-    gap:16px;
-}
+        <Button
+          appearance="subtle"
+          icon={<Navigation24Regular />}
+          onClick={onToggle}
+        />
 
-.header-subtitle{
-    font-size:13px;
-    color:#777;
-    margin-top:3px;
+        <div>
+          <Text
+            size={500}
+            weight="semibold"
+          >
+            نظام جاهزية المرافق
+          </Text>
+
+          <div className="header-subtitle">
+            كلية الشريعة والقانون
+          </div>
+        </div>
+
+      </div>
+
+      <div className="header-left">
+
+        <Button
+          appearance="subtle"
+          icon={<Alert24Regular />}
+        />
+
+        <Avatar
+          name="محمد الشمري"
+          size={40}
+        />
+
+      </div>
+
+    </header>
+  );
 }
